@@ -1,0 +1,22 @@
+.container {
+  width: 500px;
+  height: 100dvh;
+  background-color: var(--light);
+  padding: 12px;
+  h3 {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+}
+
+.mt-24 {
+  margin-top: 24px;
+}
+
+.groupButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}

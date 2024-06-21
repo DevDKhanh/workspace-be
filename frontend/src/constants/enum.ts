@@ -1,4 +1,7 @@
-export enum QUERY_KEY {}
+export enum QUERY_KEY {
+  login,
+  positions,
+}
 export enum TYPE_DATE {
   ALL = -1,
   TODAY = 1,

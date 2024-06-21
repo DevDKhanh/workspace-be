@@ -9,6 +9,10 @@ export class CreateAccountDto {
 
   @ApiProperty({ example: 'string' })
   @IsString()
+  fullname: string;
+
+  @ApiProperty({ example: 'string' })
+  @IsString()
   password: string;
 
   @ApiProperty({ example: 0 })

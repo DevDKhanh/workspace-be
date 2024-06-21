@@ -1,5 +1,5 @@
-import { Fragment, memo, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Fragment, memo, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import useQueryParams, { useQueryNextJS } from "~/common/hooks/useQueryParams";
 
 import Button from "~/components/common/Button";
@@ -7,14 +7,14 @@ import Form from "~/components/common/Form";
 import Input from "~/components/common/Form/Input";
 import Loading from "~/components/common/Loading";
 import PositionContainer from "~/components/common/PositionContainer";
-import { PropsFormCreate } from "./interfaces";
+import { PropsFormEdit } from "./interfaces";
 import { QUERY_KEY } from "~/constants/enum";
 import TextareaCustom from "~/components/common/TextareaCustom";
 import { httpRequest } from "~/services";
 import positionsService from "~/services/positionsService";
-import styles from "./FormCreate.module.scss";
+import styles from "./FormEdit.module.scss";
 
-function FormCreate({}: PropsFormCreate) {
+function FormEdit({}: PropsFormEdit) {
   const clientQuery = useQueryClient();
 
   const { query } = useQueryParams();
@@ -25,10 +25,10 @@ function FormCreate({}: PropsFormCreate) {
     description: "",
   });
 
-  const create = useMutation({
+  const edit = useMutation({
     mutationFn: () =>
       httpRequest({
-        http: positionsService.create(form),
+        http: positionsService.update({ ...form, id: query?.edit }),
       }),
     onSuccess: (res) => {
       if (res) {
@@ -40,26 +40,42 @@ function FormCreate({}: PropsFormCreate) {
           queryKey: [QUERY_KEY.positions],
         });
         setQuery({
-          create: null,
+          edit: null,
         });
       }
     },
   });
 
+  const data = useQuery({
+    queryKey: [QUERY_KEY.positions, query?.edit],
+    queryFn: () =>
+      httpRequest({
+        http: positionsService.findOne({
+          id: query?.edit,
+        }),
+      }),
+  });
+
+  useEffect(() => {
+    if (data?.data) {
+      setForm(data?.data);
+    }
+  }, [data.data]);
+
   return (
     <Fragment>
-      <Loading loading={create.isPending} />
+      <Loading loading={edit.isPending} />
       <PositionContainer
-        open={query?.create == "open"}
+        open={!!query?.edit}
         onClose={() =>
           setQuery({
-            create: null,
+            edit: null,
           })
         }
       >
         <div className={styles.container}>
-          <h3>Thêm mới chức vụ</h3>
-          <Form form={form} setForm={setForm} onSubmit={create.mutate}>
+          <h3>Sửa chức vụ</h3>
+          <Form form={form} setForm={setForm} onSubmit={edit.mutate}>
             <Input
               name="name"
               label="Tên chức vụ"
@@ -82,7 +98,7 @@ function FormCreate({}: PropsFormCreate) {
                 rounded_6
                 onClick={() =>
                   setQuery({
-                    create: null,
+                    edit: null,
                   })
                 }
               >
@@ -96,4 +112,4 @@ function FormCreate({}: PropsFormCreate) {
   );
 }
 
-export default memo(FormCreate);
+export default memo(FormEdit);

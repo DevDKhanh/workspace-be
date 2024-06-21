@@ -39,10 +39,12 @@ export function createPagination<T>(
 }
 
 export function resultData({
+  isList = false,
   statusCode = HttpStatus.OK,
   message = '',
   data = null,
 }: {
+  isList?: boolean;
   statusCode?: number;
   message?: string;
   data?: any;
@@ -50,7 +52,12 @@ export function resultData({
   return {
     statusCode,
     message,
-    data,
+    data: isList
+      ? {
+          list: data[0],
+          total: data[1],
+        }
+      : data,
   };
 }
 

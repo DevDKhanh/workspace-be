@@ -40,11 +40,17 @@ export class AuthService {
       });
     }
 
-    const { password, ...data } = user;
+    const { password, username, createdAt, updateddAt, ...data } = user;
 
-    return {
-      access_token: this.jwtService.sign(data),
-      ...data,
-    };
+    return resultData({
+      data: {
+        access_token: this.jwtService.sign({
+          id: data.id,
+          username,
+          role: data.role,
+        }),
+        ...data,
+      },
+    });
   }
 }

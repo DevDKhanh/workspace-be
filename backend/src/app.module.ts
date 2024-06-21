@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { Module } from '@nestjs/common';
+import { PositionModule } from './modules/position/position.module';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -21,7 +22,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         database: config.get<string>('MYSQL_DATABASE'),
         username: config.get<string>('MYSQL_USERNAME'),
         password: config.get<string>('MYSQL_PASSWORD'),
-        // synchronize: process.env.NODE != 'production',
+        synchronize: process.env.NODE != 'production',
         autoLoadEntities: true,
         entities: ['dist/**/*.entity.{ts,js}'],
         retryAttempts: 5,
@@ -31,6 +32,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     }),
     AuthModule,
     AccountModule,
+    PositionModule,
   ],
   controllers: [AppController],
   providers: [AppService],

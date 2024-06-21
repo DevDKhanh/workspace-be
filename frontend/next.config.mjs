@@ -24,14 +24,6 @@ const nextConfig = {
         source: `${process.env.NEXT_PUBLIC_API_BASE}/:path*`,
         destination: `${process.env.NEXT_PUBLIC_API_URL}/:path*`,
       },  
-      {
-        source: `${process.env.NEXT_PUBLIC_API_IMAGE}/:path*`,
-        destination: `${process.env.NEXT_PUBLIC_API_MEDIA}/:path*`,
-      },  
-      {
-        source: `${process.env.NEXT_PUBLIC_API_CHAT}/:path*`,
-        destination: `${process.env.NEXT_PUBLIC_SOCKET}/:path*`,
-      },  
     ];
   },
 };

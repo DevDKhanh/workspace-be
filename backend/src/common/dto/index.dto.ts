@@ -1,8 +1,14 @@
-import { IsInt, IsOptional } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { CreateDateColumn } from 'typeorm';
 
 export class Pagination {
+  @ApiProperty({ default: '', required: false })
+  @IsString()
+  @IsOptional()
+  keyword?: string;
+
   @ApiProperty({ default: 1 })
   @IsInt()
   @IsOptional()
@@ -12,4 +18,14 @@ export class Pagination {
   @IsInt()
   @IsOptional()
   pageSize: number;
+}
+
+export class EnityBase {
+  @ApiProperty()
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @ApiProperty()
+  @CreateDateColumn()
+  updateddAt: Date;
 }

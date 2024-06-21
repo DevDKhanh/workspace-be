@@ -1,0 +1,25 @@
+.container {
+  width: 100dvw;
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-size: 26px;
+    margin-bottom: 24px;
+  }
+}
+
+.form {
+  width: 95%;
+  max-width: 450px;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.groupBtn {
+  margin-top: 16px;
+}

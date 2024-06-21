@@ -27,10 +27,14 @@ function AppProvider({
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <SocketProvider>
-          {/* <NextNProgress color="#000" options={{ showSpinner: false }} />
+          <NextNProgress
+            height={2}
+            color="#0866FF"
+            options={{ showSpinner: false }}
+          />
           <SplashScreen />
           <UpdateRouter />
-          <ToastContainer autoClose={3000} /> */}
+          <ToastContainer autoClose={3000} />
           {children}
         </SocketProvider>
       </QueryClientProvider>

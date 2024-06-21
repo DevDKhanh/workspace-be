@@ -1,9 +1,10 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 import { ApiProperty } from '@nestjs/swagger';
+import { EnityBase } from 'src/common/dto/index.dto';
 
 @Entity({ name: 'account' })
-export class Account {
+export class Account extends EnityBase {
   @ApiProperty()
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -11,6 +12,10 @@ export class Account {
   @ApiProperty()
   @Column({ type: 'nvarchar', length: 255, unique: true, nullable: false })
   username: string;
+
+  @ApiProperty()
+  @Column({ type: 'nvarchar', length: 255, unique: false, nullable: true })
+  fullname: string;
 
   @ApiProperty()
   @Column({ type: 'varchar', unique: true, nullable: false })

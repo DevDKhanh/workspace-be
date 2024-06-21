@@ -1,15 +1,13 @@
-import { RootState, store } from "~/redux/store";
 import { toastInfo, toastSuccess, toastWarn } from "~/common/func/toast";
 
 import axios from "axios";
-import { getKeyCert } from "~/common/func/optionConvert";
 import { logout } from "~/redux/reducer/auth";
-import { useSelector } from "react-redux";
+import { store } from "~/redux/store";
 
 export enum RESULT {
-  SUCCESSFUL = 0,
-  ERR,
-  OTP_SEND_MANY = 20,
+  SUCCESSFUL = 200,
+  ERR = 400,
+  OTHER_ERROR = 500,
 }
 
 const axiosClient = axios.create({
@@ -21,29 +19,13 @@ const axiosClient = axios.create({
 });
 
 axiosClient.interceptors.request.use(async (config) => {
-  const { token, user } = store.getState().auth;
-  const { language } = store.getState().site;
+  const { token } = store.getState().auth;
   if (config.headers["Content-Type"] != "multipart/form-data") {
     config.data = {
-      // device: "web",
-      // username: user?.userName || "",
-      // ...getKeyCert(),
       ...config.data,
     };
   }
-  let languageName = "";
-  if (language == "vi") {
-    languageName = "vi-VN";
-  }
-  else if (language == "cn") {
-    languageName = "zh-CN";
-  }
-  else {
-    languageName = "en-US";
-  }
   config.headers.Authorization = token ? "Bearer " + token : null;
-  config.headers.Product = "Admin";
-  config.headers["Accept-Language"] = languageName;
   return config;
 });
 axiosClient.interceptors.response.use(
@@ -69,8 +51,6 @@ export const httpRequest = async ({
   msgSuccess = "Thành công",
   showMessageSuccess = false,
   showMessageFailed = false,
-  isList = false,
-  root = false,
   onError,
 }: {
   http: any;
@@ -78,32 +58,18 @@ export const httpRequest = async ({
   onError?: () => void;
   showMessageSuccess?: boolean;
   showMessageFailed?: boolean;
-  isList?: boolean;
-  root?: boolean;
   msgSuccess?: string;
 }) => {
   setLoading && setLoading(() => true);
   try {
     const res: any = await http;
 
-    if (root) {
-      return res;
-    }
-    if (res?.error?.code === RESULT.SUCCESSFUL || !res?.error?.code) {
-      showMessageSuccess &&
-        toastSuccess({ msg: msgSuccess || res?.error.message });
-      if (isList) {
-        return {
-          items: res?.data?.items || [],
-          total: res?.data?.pagination?.totalCount || 0,
-          res: res?.data,
-        };
-      }
-
-      return res || true;
+    if (res?.statusCode === RESULT.SUCCESSFUL) {
+      showMessageSuccess && toastSuccess({ msg: msgSuccess || res?.message });
+      return res?.data || true;
     } else {
       onError && onError();
-      throw res?.error.message;
+      throw res?.message;
     }
   } catch (err: any) {
     if (

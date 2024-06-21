@@ -6,7 +6,7 @@ import { setFormLogin, setIsMobile, setLoading } from "~/redux/reducer/site";
 import CryptoJS from "crypto-js";
 import { PropsSplashScreen } from "./interfaces";
 import { QUERY_KEY } from "~/constants/enum";
-import accountService from "~/services/accountService";
+import accountService from "~/services/authService";
 import clsx from "clsx";
 import commonService from "~/services/commonService";
 import { httpRequest } from "~/services";
