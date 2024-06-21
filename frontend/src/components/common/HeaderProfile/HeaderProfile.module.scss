@@ -1,0 +1,43 @@
+.container {
+  border-bottom: 1px solid #e4e6ec;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+}
+
+.header {
+  padding: 10px;
+  z-index: 1;
+  height: var(--height-title-header);
+}
+
+.title {
+  display: grid;
+  grid-template-columns: 20px 1fr 20px;
+  align-items: center;
+  justify-content: center;
+  // padding-right: 20px;
+
+  i {
+    font-size: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 22.5px;
+    text-align: center;
+  }
+
+  .action {
+    font-size: 20px;
+  }
+}
+
+.nav {
+  padding: 0 12px;
+}
+.search {
+  padding: 12px;
+}

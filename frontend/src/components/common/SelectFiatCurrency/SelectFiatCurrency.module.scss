@@ -1,0 +1,126 @@
+.classMain {
+    --duration: .3s;
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+    left: 50%;
+    opacity: 0;
+    bottom: 0;
+    transform: translateX(-50%) scale(1);
+    animation: showPopup var(--duration) forwards !important;
+    &.hidden {
+        animation: hiddenPopup var(--duration) forwards !important;
+    }
+}
+
+@keyframes showPopup {
+    0% {
+        opacity: 0;
+        bottom: -500px;
+    }
+
+    100% {
+        opacity: 1;
+        bottom: 0;
+    }
+}
+
+@keyframes hiddenPopup {
+    0% {
+        opacity: 1;
+        bottom: 0;
+    }
+
+    100% {
+        opacity: 0;
+        bottom: -500px;
+    }
+}
+
+.group {
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+
+    .label {
+        font-size: 14px;
+        // font-weight: 500;
+        line-height: 18px;
+
+    }
+
+    .groupBox {
+        margin-top: 8px;
+        position: relative;
+
+        .input {
+            border: 1px solid #E4E6EC;
+            width: 100%;
+            padding: 8px 12px;
+            padding-right: 40px;
+            border-radius: 8px;
+            height: 40px;
+        }
+
+        .select {
+            position: absolute;
+            top: 50%;
+            right: 3px;
+            transform: translate(0, -50%);
+
+            padding: 8px;
+            font-size: 18px;
+        }
+    }
+}
+
+.container {
+    background: #FFFFFF;
+    width: 100%;
+    height: 100%;
+}
+.search{
+    padding: 0 10px
+}
+.box {
+    overflow: auto;
+    padding: 10px
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px;
+
+    p {
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 28px;
+    }
+    i{
+        font-size: 26px;
+        color: #0C0C0C;
+    }
+}
+
+.group_box {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+
+    &.active {
+        i {
+            color: #008A00;
+        }
+
+        color: #000000;
+    }
+
+    .textItem {
+        font-size: 13px;
+        font-weight: 500;
+        line-height: 16px;
+    }
+}

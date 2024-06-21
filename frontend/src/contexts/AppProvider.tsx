@@ -1,0 +1,41 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import NextNProgress from "nextjs-progressbar";
+import { Provider } from "react-redux";
+import SocketProvider from "./SocketProvider";
+import SplashScreen from "~/components/protected/SplashScreen";
+import { ToastContainer } from "react-toastify";
+import UpdateRouter from "~/components/layout/UpdateRouter";
+import { store } from "~/redux/store";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+function AppProvider({
+  children,
+  pageProps,
+}: {
+  children: React.ReactNode;
+  pageProps: any;
+}) {
+  return (
+    <Provider store={store}>
+      <QueryClientProvider client={queryClient}>
+        <SocketProvider>
+          {/* <NextNProgress color="#000" options={{ showSpinner: false }} />
+          <SplashScreen />
+          <UpdateRouter />
+          <ToastContainer autoClose={3000} /> */}
+          {children}
+        </SocketProvider>
+      </QueryClientProvider>
+    </Provider>
+  );
+}
+
+export default AppProvider;

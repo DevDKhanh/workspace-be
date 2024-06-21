@@ -1,0 +1,24 @@
+stages:
+  - publish
+ 
+publish:
+  stage: publish
+  variables:
+    GIT_STRATEGY: clone
+  only:
+    - main
+  script:
+    - yarn
+    - yarn build
+    - chmod og= $LT689_GIT_RSA_STAGING
+    - ssh -i $LT689_GIT_RSA_STAGING -o StrictHostKeyChecking=no $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX "echo Make Connection"
+    - scp -i $LT689_GIT_RSA_STAGING -r public $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX:$PATH_FOLDER_STAGING
+    - scp -i $LT689_GIT_RSA_STAGING -r package.json $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX:$PATH_FOLDER_STAGING
+    - scp -i $LT689_GIT_RSA_STAGING -r yarn.lock $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX:$PATH_FOLDER_STAGING
+    - scp -i $LT689_GIT_RSA_STAGING -r next.config.mjs $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX:$PATH_FOLDER_STAGING
+    - scp -i $LT689_GIT_RSA_STAGING -r .next $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX:$PATH_FOLDER_STAGING
+    - ssh -i $LT689_GIT_RSA_STAGING -o StrictHostKeyChecking=no $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX "cd $PATH_FOLDER_STAGING && yarn"
+    - ssh -i $LT689_GIT_RSA_STAGING -o StrictHostKeyChecking=no $LT689_GIT_USERNAME@$IP_AN_NHIEN_SANDBOX "$COMMAND_RESTART_STAGING"
+
+# cmd init: pm2 start yarn --name "mg-seller" --interpreter bash -- start --port 3100  
+
