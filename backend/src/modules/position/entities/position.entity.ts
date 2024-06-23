@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
+import { Account } from 'src/modules/account/entities/account.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import { EnityBase } from 'src/common/dto/index.dto';
 

@@ -8,6 +8,8 @@ import { Module } from '@nestjs/common';
 import { PositionModule } from './modules/position/position.module';
 import { SharedModule } from './shared/shared.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TeamModule } from './modules/team/team.module';
+import { FilterModule } from './modules/filter/filter.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
     AuthModule,
     AccountModule,
     PositionModule,
+    TeamModule,
+    FilterModule,
   ],
   controllers: [AppController],
   providers: [AppService],
